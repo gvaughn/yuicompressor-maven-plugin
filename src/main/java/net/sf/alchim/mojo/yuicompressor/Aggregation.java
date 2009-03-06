@@ -11,6 +11,7 @@ import org.codehaus.plexus.util.IOUtil;
 
 public class Aggregation {
     public File output;
+	public File inputDir;
     public String[] includes;
     public String[] excludes;
     public boolean removeIncluded = false;
@@ -81,7 +82,13 @@ public class Aggregation {
 
     private DirectoryScanner newScanner() throws Exception {
         DirectoryScanner scanner = new DirectoryScanner();
-        scanner.setBasedir(output.getParentFile());
+		File input;
+		if(inputDir == null) {
+			input = output.getParentFile();
+		} else {
+			input = inputDir;
+		}
+        scanner.setBasedir(input);
         if ((excludes != null) && (excludes.length != 0)) {
             scanner.setExcludes(excludes);
         }
